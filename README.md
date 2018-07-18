@@ -1,8 +1,9 @@
 # ansible-elasticsearch
 Ansible role for manage Elasticsearch
 
-## Description
-Only one instance is supported.
+## Features
+ - Only one instance is supported
+ - Simplier than [official Elastic Ansible role for Elasticsearch](https://github.com/elastic/ansible-elasticsearch)
 
 ## Role variables
 ```
