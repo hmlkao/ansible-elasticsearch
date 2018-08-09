@@ -1,0 +1,8 @@
+es_update: false
+java_update: false
+default_config:
+  path.data: /var/lib/{{ project }}
+  path.logs: /var/log/{{ project }}
+es_heap_size: 1g
+es_restart_on_change: true
+es_version: ""

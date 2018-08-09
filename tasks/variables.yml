@@ -1,0 +1,27 @@
+# This should be only place where are used variables with prefix
+# It facilitate sharing code between projects
+---
+
+- set_fact: version = es_version
+  when: es_version is defined
+
+- set_fact: config={{ es_config }}
+  when: es_config is defined
+
+- set_fact: pkg_name={{ es_pkg_name }}
+  when: es_pkg_name is defined
+
+- set_fact: pkg_update={{ es_update }}
+  when: es_update is defined
+
+- set_fact: restart_on_change={{ es_restart_on_change }}
+  when: es_restart_on_change is defined
+
+- set_fact: service_name={{ es_service_name }}
+  when: es_service_name is defined
+
+- set_fact: conf_dir={{ es_conf_dir }}
+  when: es_conf_dir is defined
+
+- set_fact: heap_size={{ es_heap_size }}
+  when: es_heap_size is defined

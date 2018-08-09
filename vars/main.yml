@@ -1,0 +1,11 @@
+# Contain variables used in role but which shouldn't be changed by user
+---
+project: elasticsearch
+elastic_major_version: 6.x
+java: java-1.8.0-openjdk.x86_64
+elastic_gpg_key: "https://artifacts.elastic.co/GPG-KEY-elasticsearch"
+es_conf_dir: /etc/{{ project }}
+es_pkg_name: "{{ project }}"
+es_service_name: "{{ project }}"
+es_user: "{{ project }}"
+es_group: "{{ project }}"
