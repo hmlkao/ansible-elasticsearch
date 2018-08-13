@@ -1,0 +1,60 @@
+# Tasks specific for this project
+---
+
+- name: ensure required paths exists
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ group }}"
+  with_items:
+    - "{{ config['path.data'] }}"
+    - "{{ config['path.logs'] }}"
+
+- name: copy Java options
+  become: yes
+  template:
+    src: jvm.options
+    dest: "{{ conf_dir }}/jvm.options"
+  notify: restart {{ project }}
+
+# Process templates if exists
+# Index templates are copied to remote machine and installed via API
+# You HAVE TO be sure that the ES is running before this task!
+# TODO: This is not the best solution, ES is not running if clean install
+- name: Wait for elasticsearch to startup
+  wait_for: host=localhost port={{ config['http.port'] | default('9200') }} delay=5 connect_timeout=1
+  when: es_templates is defined
+
+- set_fact: templates_dir={{ conf_dir }}/templates
+
+- name: ensure directory for templates exists
+  file:
+    path: "{{ templates_dir }}"
+    state: directory
+    owner: "{{ user }}"
+    group: "{{ group }}"
+  when: es_templates is defined and es_templates != ""
+
+- name: copy templates to remote machine
+  copy:
+    src: "{{ item }}"
+    dest: "{{ templates_dir }}"
+    owner: "{{ user }}"
+    group: "{{ group }}"
+  register: templates_loaded
+  with_fileglob:
+    - "{{ es_templates }}"
+  when: es_templates is defined and es_templates != ""
+
+# Install all templates to ES
+- name: install templates (without auth)
+  uri:
+    url: "http://localhost:{{ config['http.port'] | default('9200') }}/_template/{{ item | filename }}"
+    method: PUT
+    status_code: 200
+    body_format: json
+    body: "{{ lookup('file', item) }}"
+  with_fileglob:
+    - "{{ es_templates }}"
+  when: templates_loaded.changed

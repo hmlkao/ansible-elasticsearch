@@ -25,3 +25,9 @@
 
 - set_fact: heap_size={{ es_heap_size }}
   when: es_heap_size is defined
+
+- set_fact: user={{ es_user }}
+  when: es_user is defined
+
+- set_fact: group={{ es_group }}
+  when: es_user is defined
