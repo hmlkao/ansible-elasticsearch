@@ -29,7 +29,6 @@ If you want to install indices templates, you shouldn't set `es_templates` role 
 This role installs templates only if they were copied to remote host. If some problem during template installation occur (eg. ES is not running yet and installation fails) templates are not installed even if you run role again (because they were already copied).
 
 ## TODO
- - Create path.data and path.logs folders (?)
- - Set correct permissions to path.data and path.logs folders (?)
  - Remove templates on remote host if installation fails
+ - Make handlers more independent on project
 

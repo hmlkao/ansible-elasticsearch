@@ -3,7 +3,7 @@
 - name: reload systemd configuration
   command: systemctl daemon-reload
 
-- name: restart {{ project }}
-  service: name={{ service_name }} state=restarted enabled=yes
+- name: restart elasticsearch
+  service: name=elasticsearch state=restarted enabled=yes
   when:
     - restart_on_change
