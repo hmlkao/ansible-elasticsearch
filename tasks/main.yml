@@ -14,3 +14,9 @@
 - import_tasks: config.yml
   tags:
     - config
+
+# Elasticsearch have to be running to install templates
+- import_tasks: templates.yml
+  tags:
+    - config
+
